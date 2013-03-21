@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 gem 'rails', '~> 4.0.0.beta1'
 gem "bson_ext"
-gem "mongo_mapper"
+gem "mongoid", '~> 4', github: 'mongoid/mongoid'
 
 group :development, :test do
   gem "rspec"

@@ -5,8 +5,8 @@ Feature: Joining a new game
 
   Background:
     Given the following games:
-      | id | name             | slug             |
-      | 1  | Cool game of tag | cool-game-of-tag |
+      | id | name             | slug             | it_id |
+      | 1  | Cool game of tag | cool-game-of-tag |       |
     And the following players:
       | id | game_id | name   | session_id |
       | 1  | 1       | Carl   | 1          |
