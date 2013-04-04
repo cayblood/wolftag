@@ -21,10 +21,11 @@ class PlayersController < ApplicationController
 
   # POST /players
   def create
-    @player = Player.new(player_params)
+    @player = Player.find_or_initialize_by(name: params[:player][:name])
 
     if @player.save
-      redirect_to @player, notice: 'Player was successfully created.'
+      session[:player] = @player.id
+      redirect_to games_path, notice: "Logged in as: #{@player.name}."
     else
       render action: 'new'
     end
@@ -43,6 +44,16 @@ class PlayersController < ApplicationController
   def destroy
     @player.destroy
     redirect_to players_url, notice: 'Player was successfully destroyed.'
+  end
+
+  def login
+    respond_to do |format|
+      if session[:player]
+        format.html { redirect_to games_path }
+      else
+        format.html { redirect_to new_player_path }
+      end
+    end
   end
 
   private

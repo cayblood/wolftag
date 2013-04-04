@@ -1,13 +1,18 @@
 Wolftag::Application.routes.draw do
-  resources :games
+  resources :games do
+    post :join, :on => :member
+  end
 
-  resources :players
+  resources :players do
+    get :login, :on => :collection
+  end
+
+  root to: 'players#login'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root to: 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

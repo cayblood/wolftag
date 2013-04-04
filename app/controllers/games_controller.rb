@@ -45,6 +45,13 @@ class GamesController < ApplicationController
     redirect_to games_url, notice: 'Game was successfully destroyed.'
   end
 
+  def join
+    @game = Game.find(params[:id])
+    @player = Player.find(params[:player])
+    @game.players << @player
+    redirect_to @game, notice: "Welcome to #{@game.name}, #{@player.name}" 
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_game

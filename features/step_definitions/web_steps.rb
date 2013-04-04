@@ -27,24 +27,38 @@ Given /^the following #{ENTITY_REGEX}:$/ do |entity_name, table|
   end
 end
 
-Given /^there are the following games:$/ do |table|
-  # table is a Cucumber::Ast::Table
-  pending # express the regexp above with the code you wish you had
+Given /^the following games: (.+)$/ do |games|
+  games.split(", ").each do |game|
+    Game.create!(name: game)
+  end
 end
 
-Given /^there are the following players:$/ do |table|
-  # table is a Cucumber::Ast::Table
-  pending # express the regexp above with the code you wish you had
+Given /^the following players: (.+)$/ do |players|
+  players.split(", ").each do |player|
+    Player.create!(name: player)
+  end
 end
 
-When /^I visit "(.*?)"$/ do |url|
-  pending # express the regexp above with the code you wish you had
+Given /^I have a session with id (.+)$/ do |player_id|
+  session[:player] = player_id
 end
 
-When /^I fill in "(.*?)" with "(.*?)"$/ do |arg1, arg2|
-  pending # express the regexp above with the code you wish you had
+When /^I visit (.*?)$/ do |path|
+  visit path_to(path)
 end
 
-Then /^I should see "(.*?)"$/ do |arg1|
-  pending # express the regexp above with the code you wish you had
+When /^I fill in "([^\"]*)" with "([^\"]*)"$/ do |field, value|
+  fill_in(field, with: value)
+end
+
+When /^I press "([^\"]*)"$/ do |button|
+  click_button(button)
+end
+
+Then /^I should be on (.*)$/ do |path|
+  current_path.should == path_to(path)
+end
+
+Then /^I should see "(.*?)"$/ do |text|
+  page.should have_content(text)
 end
