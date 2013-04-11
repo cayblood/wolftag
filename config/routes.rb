@@ -1,5 +1,6 @@
 Wolftag::Application.routes.draw do
   resources :games do
+    get :staging_area, :on => :member
     post :join, :on => :member
   end
 

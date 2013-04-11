@@ -47,12 +47,16 @@ When /^I visit (.*?)$/ do |path|
   visit path_to(path)
 end
 
-When /^I fill in "([^\"]*)" with "([^\"]*)"$/ do |field, value|
+When /^I fill in '([^\"]*)' with '([^\"]*)'$/ do |field, value|
   fill_in(field, with: value)
 end
 
 When /^I press "([^\"]*)"$/ do |button|
   click_button(button)
+end
+
+When /^I follow (.+)$/ do |link|
+  click_link(link)
 end
 
 Then /^I should be on (.*)$/ do |path|
@@ -61,4 +65,22 @@ end
 
 Then /^I should see "(.*?)"$/ do |text|
   page.should have_content(text)
+end
+
+Given /^I am logged in as (.+)$/ do |player_name|
+  step "I visit the homepage"
+  step "I fill in 'Name' with '#{player_name}'"
+  step 'I press "Add me"'
+end
+
+Then /^"(.*?)" should have (\d+) player$/ do |game_name, player_count|
+  game = Game.find_by(name: game_name)
+  game.players.count.should == player_count.to_i
+end
+
+Then /^player "(.*?)" should be a part of (\d+) game "(.*?)"$/ do |player_name, games_count, game_name|
+  player = Player.find_by(name: player_name)
+  player.games.count.should == games_count.to_i
+  game = Game.find_by(name: game_name)
+  player.games.map(&:name).should include(game.name)
 end

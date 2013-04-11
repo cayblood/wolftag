@@ -20,12 +20,19 @@ Feature: Joining a new game
 
   Scenario: Login with session
     When I visit the homepage
-    And I fill in "Name" with "Nico"
+    And I fill in 'Name' with 'Nico'
     And I press "Add me"
     Then I should be on the list of games 
     And I should see "Logged in as: Nico."
+    And I should see "Cool game of tag"
 
-  #Scenario: A new player joins
-  #  When I visit "/games/cool-game-of-tag/join?player=nico"
-  #  Then I should see "Welcome to Cool game of tag, Nico"
-  #  And the game "Cool game of tag" should have 1 player
+  Scenario: Join a game
+    Given I am logged in as Nico
+    When I visit the homepage
+    And I follow Cool game of tag
+    And I press "Join"
+    Then "Cool game of tag" should have 1 player
+    And player "Nico" should be a part of 1 game "Cool game of tag"
+    And I should see "Welcome to Cool game of tag, Nico" 
+    And player "Nico" should not be IT in game "Cool game of tag"
+

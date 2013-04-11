@@ -8,6 +8,8 @@ class GamesController < ApplicationController
 
   # GET /games/1
   def show
+    @game = Game.find(params[:id])
+    @player = Player.find(session[:player])
   end
 
   # GET /games/new
@@ -47,9 +49,15 @@ class GamesController < ApplicationController
 
   def join
     @game = Game.find(params[:id])
-    @player = Player.find(params[:player])
+    @player = Player.find(session[:player])
     @game.players << @player
     redirect_to @game, notice: "Welcome to #{@game.name}, #{@player.name}" 
+  end
+
+  def staging_area
+    @game = Game.find(params[:id])
+    @player = Player.find(session[:player])
+    redirect_to @game if @player.games.map(&:name).include?(@game.name)
   end
 
   private

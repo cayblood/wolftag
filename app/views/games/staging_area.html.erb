@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="2"><%= @game.name %></th>
+     </tr>
+  </thead>
+  <tbody>
+    <% @game.players.each do |player| %>
+      <tr>
+        <td><%= player.name %></td>
+        <td><%= @game.it == player %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= button_to 'Join', join_game_path(@game) %>
+<%= link_to 'Back', games_path %>
