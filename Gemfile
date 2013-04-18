@@ -3,6 +3,9 @@ gem 'rails', '~> 4.0.0.beta1'
 gem "bson_ext"
 gem "mongoid", '~> 4', github: 'mongoid/mongoid'
 
+gem 'thin'
+gem 'quiet_assets', :group => :development
+
 group :development, :test do
   gem "rspec"
   gem "rspec-rails", ">= 2.0.0.beta"
