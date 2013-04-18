@@ -1,5 +1,6 @@
 class PlayersController < ApplicationController
   before_action :set_player, only: [:show, :edit, :update, :destroy]
+  skip_before_filter :check_for_login, only: [:create, :new]
 
   # GET /players
   def index
@@ -44,16 +45,6 @@ class PlayersController < ApplicationController
   def destroy
     @player.destroy
     redirect_to players_url, notice: 'Player was successfully destroyed.'
-  end
-
-  def login
-    respond_to do |format|
-      if session[:player]
-        format.html { redirect_to games_path }
-      else
-        format.html { redirect_to new_player_path }
-      end
-    end
   end
 
   private

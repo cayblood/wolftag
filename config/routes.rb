@@ -5,10 +5,9 @@ Wolftag::Application.routes.draw do
   end
 
   resources :players do
-    get :login, :on => :collection
   end
 
-  root to: 'players#login'
+  root to: "games#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

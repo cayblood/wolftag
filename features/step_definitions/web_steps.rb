@@ -10,32 +10,18 @@ end
 
 module CrudHelpers
   def update_attributes_from_cucumber_table(model_class, attributes)
-    instance = model_class.new
-    instance.id = attributes['id']
-    instance.update_attributes(attributes)
+    instance = model_class.new(attributes)
     instance.save!
   end
 end
 World(CrudHelpers)
 
-ENTITY_REGEX = /(game(?:s?))/
+ENTITY_REGEX = /(.*?)/
 Given /^the following #{ENTITY_REGEX}:$/ do |entity_name, table|
   model_class = entity_name.as_entity
   table = table.transpose unless entity_name.plural?
   table.hashes.each do |attributes|
     update_attributes_from_cucumber_table(model_class, attributes)
-  end
-end
-
-Given /^the following games: (.+)$/ do |games|
-  games.split(", ").each do |game|
-    Game.create!(name: game)
-  end
-end
-
-Given /^the following players: (.+)$/ do |players|
-  players.split(", ").each do |player|
-    Player.create!(name: player)
   end
 end
 
@@ -55,7 +41,7 @@ When /^I press "([^\"]*)"$/ do |button|
   click_button(button)
 end
 
-When /^I follow (.+)$/ do |link|
+When /^I follow "([^\"]*)"$/ do |link|
   click_link(link)
 end
 
