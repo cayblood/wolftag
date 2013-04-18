@@ -1,6 +1,5 @@
 class Player
   include Mongoid::Document
-  field :_id, type: String
   field :name, type: String
   has_and_belongs_to_many :games
 
